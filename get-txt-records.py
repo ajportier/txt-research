@@ -16,18 +16,18 @@ from dns_audit import *
 LOCAL_RESOLVER = dns.resolver.Resolver()
 LOCAL_DNS_ADDR = ['127.0.0.1']
 LOCAL_DNS_PORT = 53
-REPORT_FILE = 'report.txt'
 ERROR_FILE = 'error.log'
 
 
-def parseRecord(record):
+def parseRecord(record, report_file):
+
     try:
     	answers = lookupTxtRecord(record, LOCAL_RESOLVER)
 
         if (len(answers) > 0):
             for answer in answers:
                 record_answer = '{} {}'.format(record, answer)
-            with open(REPORT_FILE, 'a+') as f:
+            with open(report_file, 'a+') as f:
 		f.write("{}\n".format(record_answer))            
 
     except Exception:
@@ -44,7 +44,7 @@ def main():
     parser.add_argument('output', type=str)
     args = parser.parse_args()
     records_file = args.input
-    REPORT_FILE = args.output
+    report_file = args.output
 
     with open(records_file, 'rb') as f:
         records = f.readlines()
@@ -55,7 +55,7 @@ def main():
     LOCAL_RESOLVER.port = LOCAL_DNS_PORT
 
     for record in records:
-        parseRecord(record)
+        parseRecord(record, report_file)
 
 
 if __name__ == '__main__': main()
