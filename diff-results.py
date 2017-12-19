@@ -13,7 +13,7 @@ import argparse
 
 def diffSet(set1, set2):
 
-    diff_set = { 'changed' : {}, 'missing' : {} }
+    diff_set = { 'changed' : {}, 'missing' : {}, 'new': {} }
 
     for key in set1.keys():
         for record in set1[key]['records']:
@@ -59,7 +59,7 @@ def diffSet(set1, set2):
     for key in set2.keys():
         for record in set2[key]['records']:
             try:
-                if (record not in set2[key]['records']):
+                if (record not in set1[key]['records']):
 
                     (rrset, rdata) = splitRecord(record)
                     set1count = countOccurances(rrset, set1[key]['records'])
@@ -74,7 +74,6 @@ def diffSet(set1, set2):
                             diff_set['new'][key] = {}
                             diff_set['new'][key]['records'] = [record]
                             diff_set['new'][key]['count'] = 1
-
 
             except KeyError:
                 try:
@@ -134,6 +133,11 @@ def main():
         sys.stdout.write("----- CHANGED -----\n")
         for key in diff_set['changed'].keys():
             sys.stdout.write("{} {}\n".format(key, diff_set['changed'][key]['count']))
+
+    if (diff_set['new'].keys() > 0):
+        sys.stdout.write("----- NEW -----\n")
+        for key in diff_set['new'].keys():
+            sys.stdout.write("{} {}\n".format(key, diff_set['new'][key]['count']))
 
     with open(output, 'w') as f:
         f.write("{}\n".format(json.dumps(diff_set, indent=4, sort_keys=True)))
