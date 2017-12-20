@@ -184,6 +184,11 @@ def classifyTxtRecord(record):
     elif (record.lower().startswith('intacct-esk=')):
         identifier = 'intacct-esk'
 
+    # Domain uses a Facebook verified page for their business
+    # https://developers.facebook.com/docs/sharing/domain-verification
+    elif (record.lower().startswith('facebook-domain-verification=')):
+        identifier = 'facebook-domain-verification'
+
     ### END SaaS Service Verification ###
 
     ### Advertising Services ###
@@ -372,7 +377,7 @@ def classifyTxtRecord(record):
         identifier = 'favro-verification'
 
     elif (record.lower().startswith('cisco-site-verification=')):
-        identifier = 'cisco-site-verification='
+        identifier = 'cisco-site-verification'
 
     elif (record.lower().startswith('ad=')):
         identifier = 'ad'
