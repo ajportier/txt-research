@@ -61,6 +61,7 @@ def main():
     topdomains = buildTopdomains(topfile)
 
     records = []
+    filelist.sort()
 
     for infile in filelist:
         for record in processJsonFile(topdomains, infile):
