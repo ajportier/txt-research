@@ -14,7 +14,6 @@ def processSpfRecord(record):
         'ip4': 0,
         'ip4_addresses': 0,
         'ip6': 0,
-        'ip6_addresses': 0,
         'a': 0,
         'mx': 0,
         'ptr': 0,
@@ -58,11 +57,11 @@ def processSpfRecord(record):
             try:
                 network = re.search('ip6:(.*)', part).group(1)
                 spf_stats['ip6'] += 1
-                spf_stats['ip6_addresses'] += IPNetwork(network).size
+        #        spf_stats['ip6_addresses'] += IPNetwork(network).size
             except netaddr.core.AddrFormatError:
                 sys.stderr.write('Error processing network {}\n'.format(network))
             except (AttributeError, ValueError):
-                sys.stderr.write('Error processing ip4 directive {}\n'.format(part))
+                sys.stderr.write('Error processing ip6 directive {}\n'.format(part))
 
         elif (part.startswith('a')):
             spf_stats['a'] += 1
@@ -89,7 +88,7 @@ def main():
     records_file = args.input
     REPORT_FILE = args.output
     
-    headers = ['domain','catch-all','ip4','ip4_addresses','ip6','ip6_addresses','a','mx','ptr','exist','include','include-gmail']
+    headers = ['domain','catch-all','ip4','ip4_addresses','ip6','a','mx','ptr','exist','include','include-gmail']
 
     data = json.load(open(records_file))
     out_f = open(REPORT_FILE, 'w')
