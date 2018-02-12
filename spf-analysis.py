@@ -19,6 +19,7 @@ def processSpfRecord(record):
         'ptr': 0,
         'exist': 0,
         'include': 0,
+        'include-targets': [],
         'include-gmail': False
     }
 
@@ -73,7 +74,9 @@ def processSpfRecord(record):
             spf_stats['exist'] += 1
 
         elif (part.startswith('include:')):
+            target = part.split(':')[1]
             spf_stats['include'] += 1
+            spf_stats['include-targets'].append(target)
             if ('include:_spf.google.com' in part):
                 spf_stats['include-gmail'] = True
 
@@ -94,14 +97,33 @@ def main():
     out_f = open(REPORT_FILE, 'w')
     out_f.write("{}\n".format(','.join(headers)))
 
+    include_targets = {}
+    top_include = []
+
     for record in data['spf']['records']:
         line = []
         spf_stats = processSpfRecord(record)
         for header in headers:
             line.append(spf_stats[header])
+            
+        for target in spf_stats['include-targets']:
+            try:
+                include_targets[target] += 1
+            except KeyError:
+                include_targets[target] = 1
 
         line = [str(x) for x in line]
         out_f.write("{}\n".format(','.join(line)))
+
+    sys.stdout.write("----- Include Statement Targets -----\n")
+    for key, value in sorted(include_targets.iteritems(),
+            key=lambda (k,v) : (v,k), reverse=True):
+        if len(top_include) < 10:
+            top_include.append("{} {}".format(key, value))
+        #print "%s: %s" % (key, value)
+
+    for target in top_include:
+        sys.stdout.write("{}\n".format(target))
 
     out_f.close()
 
