@@ -68,7 +68,7 @@ def analyzeRecordPrefix(records):
     sorted_record_types = sorted(disc_record_types.items(), key=lambda x: x[1])
 
     for (record_type, records) in sorted_record_types:
-        if (records > 1):
+        if (records > 2):
             sys.stdout.write("{} {}\n".format(record_type, records))
 
     sys.stdout.write("----------\n");

@@ -137,6 +137,26 @@ def classifyTxtRecord(record):
     elif (record.lower().startswith('yandex-verification')):
         identifier = 'yandex-verification'
 
+    # Verification for hosted Mail.ru email
+    # https://help.mail.ru/biz/domain/verification_settings/other/confirm
+    elif (record.lower().startswith('mailru-domain:')):
+        identifier = 'mailru-domain'
+
+    # Tied to some mail.ru email service, could not find more information in English
+    # https://www.youtube.com/watch?v=GHy8aH08QNo
+    elif (record.lower().startswith('wmail-verification:')):
+        identifier = 'wmail-verification'
+
+    # Hosted email through Zoho
+    # https://www.zoho.com/mail/help/adminconsole/domain-verification.html
+    elif (record.lower().startswith('zoho-verification=')):
+        identifier = 'zoho-verification'
+
+    # SendInBlue email marketing service
+    # https://help.sendinblue.com/hc/en-us/articles/115000240344-Step-1-Delegating-your-subdomain
+    elif (record.lower().startswith('sendinblue-code:')):
+        identifier = 'sendinblue-code'
+
     ### END Email SaaS Verification ###
 
     ### SaaS Service Verification ###
@@ -295,6 +315,54 @@ def classifyTxtRecord(record):
     elif (record.lower().startswith('botify-site-verification=')):
         identifier = 'botify-site-verification'
 
+    # Domain has a custom API documentation domain in Postman
+    # https://www.getpostman.com/docs/postman/api_documentation/adding_and_verifying_custom_domains
+    elif (record.lower().startswith('postman-domain-verification=')):
+        identifier = 'postman-domain-verification'
+
+    # Perhaps related to Intermedia AppID (SSO), can't find any definite information
+    # https://www.intermedia.net/products/appid
+    elif (record.lower().startswith('appid=')):
+        identifier = 'appid'
+
+    # Domain uses Favro for workflow management and OneLogin SSO
+    # https://help.favro.com/configure-favro/enterprise/single-sign-on-setup-with-onelogin
+    elif (record.lower().startswith('favro-verification=')):
+        identifier = 'favro-verification'
+
+    # Domain is integrated with the LINE Works platform
+    # https://developers.worksmobile.com/jp/document/3012006
+    elif (record.lower().startswith('worksmobile-certification=')):
+        identifier = 'worksmobile-certification'
+
+    # Proof of domain ownership to use Cloudpiercer security scanning tool
+    # https://cloudpiercer.org/
+    elif (record.lower().startswith('cloudpiercer-verification=')):
+        identifier = 'cloudpiercer-verification'
+
+    # Perhaps related to Spycloud security system
+    # https://spycloud.com
+    elif (record.lower().startswith('spycloud-domain-verification=')):
+        identifier = 'spycloud-domain-verification'
+
+    # Domain uses (or has used) the Cisco Threat Awareness scanner tool
+    # https://supportforums.cisco.com/t5/security-documents/cisco-threat-awareness-service-frequently-asked-questions/ta-p/3159415
+    elif (record.lower().startswith('cisco-site-verification=')):
+        identifier = 'cisco-site-verification'
+
+    # Most likely used in verification of domain ownership for Thousandeyes monitoring solution
+    elif (record.lower().startswith('thousandeyes:')):
+        identifier = 'thousandeyes'
+
+    # Domain uses the OpenVoice audio conferencing product from LogMeIn
+    elif (record.lower().startswith('logmein-verification-code=')):
+        identifier='logmein-openvoice'
+
+    # Registers domain to work with the cloudControl platform for hosting
+    # https://github.com/castle/cloudcontrol-documentation/blob/master/Add-on%20Documentation/Deployment/Alias.md
+    elif (record.lower().startswith('cloudcontrol-verification:')):
+        identifier = 'cloudcontrol'
+
     ### END Developer Tools / Infrastructure ###
 
     ### SSL Certificates ###
@@ -319,17 +387,20 @@ def classifyTxtRecord(record):
     # Location of Fuse ESB message routing service
     # https://developers.redhat.com/products/fuse/overview/?referrer=jbd
     elif (record.lower().startswith('fuseserver=')):
-        identifier = 'fuserserver'
+        identifier = 'fuseserver'
 
     # Domain uses Symantec Mobile Management to identify / protect mobile devices on
     # their network. This is the iOS agent string to find the enrollment server.
     # https://support.symantec.com/en_US/article.HOWTO77270.html
-    elif (record.lower().startswith('osiagentregurl=')):
-        identifier = 'osiagentregurl'
+    elif ((record.lower().startswith('osiagentregurl=')) or
+            (record.lower().startswith('android-mdm-enroll='))):
+        identifier = 'symantec-mdm'
 
-    # This is the agent string for Android for Symantec Mobile Management
-    elif (record.lower().startswith('android-mdm-enroll=')):
-        identifier = 'android-mdm-enroll'
+    # Domain is using Ivanti Landesk for managing mobile devices
+    # https://help.ivanti.com/ld/help/en_US/LDMS/10.0/Mobility/mobl-DNS.htm
+    elif ((record.lower().startswith('ios-enroll=')) or
+            (record.lower().startswith('android-enroll='))):
+        identifier = 'ivanti-landesk'
 
     # Bittorrent Tracker Preferences
     # http://www.bittorrent.org/beps/bep_0034.html
@@ -340,74 +411,17 @@ def classifyTxtRecord(record):
 
     ##### More General / Tail Matches #####
 
-    elif (record.lower().startswith('pod=')):
-        identifier = 'pod'
-
-    elif (record.lower().startswith('mailru-domain:')):
-        identifier = 'mailru-domain'
-
-    elif (record.lower().startswith('wmail-verification:')):
-        identifier = 'wmail-verification'
-
-    elif (record.lower().startswith('zoho-verification=')):
-        identifier = 'zoho-verification'
-
-    elif (record.lower().startswith('sendinblue-code:')):
-        identifier = 'sendinblue-code'
-
-    elif (record.lower().startswith('cloudpiercer-verification=')):
-        identifier = 'cloudpiercer-verification'
-
-    elif (record.lower().startswith('postman-domain-verification=')):
-        identifier = 'postman-domain-verification'
-
-    elif (record.lower().startswith('ha:')):
-        identifier = 'ha'
-
-    elif (record.lower().startswith('appid=')):
-        identifier = 'appid'
-
-    elif (record.lower().startswith('i=')):
-        identifier = 'i'
-
-    elif (record.lower().startswith('spycloud-domain-verification=')):
-        identifier = 'spycloud-domain-verification'
-
-    elif (record.lower().startswith('favro-verification=')):
-        identifier = 'favro-verification'
-
-    elif (record.lower().startswith('cisco-site-verification=')):
-        identifier = 'cisco-site-verification'
-
-    elif (record.lower().startswith('ad=')):
-        identifier = 'ad'
-
-    elif (record.lower().startswith('worksmobile-certification=')):
-        identifier = 'worksmobile-certification'
-
-    elif (record.lower().startswith('value:')):
-        identifier = 'value'
-
-    elif (record.lower().startswith('count=')):
-        identifier = 'count'
-
-    elif (record.lower().startswith('citirix-verification-code=')):
-        identifier = 'citirix-verification-code'
-
-    elif (record.lower().startswith('www=')):
-        identifier = 'www'
-
-    elif (record.lower().startswith('p=')):
-        identifier = 'p'
-
-    elif (record.lower().startswith('thousandeyes:')):
-        identifier = 'thousandeyes'
-
-    elif (record.lower().startswith('as=')):
-        identifier = 'as'
-
-    elif (record.lower().startswith('wp-noop:')):
-        identifier = 'wp-noop'
+    # Catch-all identifier for patterns with no documented use case, probably fragments of
+    # another documented use case
+    elif ((record.lower().startswith('as=')) or
+           (record.lower().startswith('i=')) or
+           (record.lower().startswith('www=')) or
+           (record.lower().startswith('v=')) or
+           (record.lower().startswith('t=')) or
+           (record.lower().startswith("p=")) or
+           (record.lower().startswith('bio=')) # https://twitter.com/peterkarsai/status/520200572428095488
+           ):
+        identifier = 'no-documented-case'
 
     # I have no idea what these are for, no documentation on digicert's public site
     elif ('digicert order #' in record):
