@@ -104,18 +104,18 @@ def classifyTxtRecord(record):
     # Office 365 domain ownership verification
     # https://support.office.microsoft.com/en-us/article/Gather-the-information-you-need-to-create-Office-365-DNS-records-77f90d4a-dc7f-4f09-8972-c1b03ea85a67
     elif (record.lower().startswith('ms=')):
-        identifier = 'ms'
+        identifier = 'office365ms'
 
     # Outlook.com domain ownership verification
     # http://www.omegaweb.com/how-to-configure-a-custom-domain-with-outlook-com/
     # https://support.office.com/en-us/article/Use-your-own-domain-in-Outlook-com-Premium-61e21366-c809-44e5-a414-9bab47110e5f?ui=en-US&rs=en-US&ad=US
     elif (record.lower().startswith('v=msv1')):
-        identifier = 'msv1'
+        identifier = 'outlookmsv1'
 
     # Another Office 365 domain ownership verification format
     # http://www.colome.org/office-365-dns-configuration/
     elif (record.lower().startswith('v=verifydomain')):
-        identifier = 'verifydomain'
+        identifier = 'office365verifydomain'
 
     # Amazon Simple Email Service (SES)
     # http://docs.aws.amazon.com/ses/latest/DeveloperGuide/dns-txt-records.html
@@ -133,7 +133,7 @@ def classifyTxtRecord(record):
         identifier = 'mailru-verification'
 
     # Domain uses the Yandex platform for managing email
-    # https://yandex.com/support/domain/setting/confirm.html
+    # https://yandex.com/support/webmaster/service/rights.html
     elif (record.lower().startswith('yandex-verification')):
         identifier = 'yandex-verification'
 
@@ -153,7 +153,7 @@ def classifyTxtRecord(record):
         identifier = 'zoho-verification'
 
     # SendInBlue email marketing service
-    # https://help.sendinblue.com/hc/en-us/articles/115000240344-Step-1-Delegating-your-subdomain
+    # https://help.sendinblue.com/hc/en-us/articles/208836149-Step-3-Creating-a-new-sender
     elif (record.lower().startswith('sendinblue-code:')):
         identifier = 'sendinblue-code'
 
