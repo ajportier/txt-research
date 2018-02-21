@@ -282,7 +282,8 @@ def classifyTxtRecord(record):
 
     # Domain uses Cisco Webex conferencing
     # https://help.webex.com/docs/DOC-4860
-    elif (record.lower().startswith('cisco-ci-domain-verification=')):
+    elif ((record.lower().startswith('cisco-ci-domain-verification=')) or
+            (record.lower().startswith('ciscocidomainverification='))):
         identifier = 'cisco-ci-domain-verification'
 
     # Domain uses LogMeIn with ADFS for Single Sign-on
@@ -299,11 +300,6 @@ def classifyTxtRecord(record):
     # https://support.bitium.com/administration/saml-moxtra/
     elif (record.lower().startswith('moxtra-site-verification=')):
         identifier = 'moxtra-site-verification'
-
-    # Domain uses Cisco Spark services for calls and collaboration
-    # https://help.webex.com/docs/DOC-4860
-    elif (record.lower().startswith('ciscocidomainverification=')):
-        identifier = 'ciscocidomainverification'
 
     # Domain hosts videos on Dailymotion and has verified ownership so it can monitize them
     # https://faq.dailymotion.com/hc/en-us/articles/211458338-Verification-Methods
