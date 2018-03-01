@@ -79,10 +79,12 @@ def main():
 
     parser = argparse.ArgumentParser(description="Classify a list of records into JSON format of classified groups")
     parser.add_argument('input', type=str)
-    parser.add_argument('output', type=str)
+    #parser.add_argument('output', type=str)
     args = parser.parse_args()
     input_file = args.input
-    output_file = args.output
+    #output_file = args.output
+
+    output_file = '{}-class.json'.format(re.search('(.+)\.txt', input_file).group(1))
 
     with open(input_file, 'r') as f:
         for domain_record in f:
