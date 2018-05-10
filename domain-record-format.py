@@ -6,7 +6,7 @@ import re
 
 top10kdomains = '/Users/aportier/git/txt-research/top-10k-txt-domains.txt'
 
-#unique_rrsets = 10000
+unique_rrsets = 10000
 infile = sys.argv[1]
 outfile = '{}.txt'.format(re.search('(.+)\.json', infile).group(1))
 mxfile = '{}-mx.txt'.format(re.search('(.+)\.json', infile).group(1))
@@ -31,8 +31,8 @@ with open(infile, 'r') as f:
         rdata = record['rdata']
         qtype = record['qtype']
 
-        #if (len(rrsets) < unique_rrsets):
-        if (qname in topdomains):
+        if (len(rrsets) < unique_rrsets):
+        #if (qname in topdomains):
 
             if qtype == 16:
                 records.append('{} {}'.format(qname, rdata))
